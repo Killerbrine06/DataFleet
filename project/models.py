@@ -2,6 +2,10 @@ from django.db import models
 from ccc.models import CCC, Person
 
 class ProjectType(models.Model):
+    class Meta:
+        verbose_name = 'Type of Projects'
+        verbose_name_plural = 'Types of Projects'
+        
     type = models.CharField(max_length=50)
 
     def __str__(self):

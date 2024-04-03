@@ -1,6 +1,9 @@
 from django.db import models
 
 class Facility(models.Model):
+    class Meta:
+        verbose_name_plural = 'Facilities'
+        
     yard = models.OneToOneField('CCC', on_delete=models.CASCADE)
     power = models.TextField(max_length=150)
     quay = models.TextField(max_length=150)
@@ -14,6 +17,10 @@ class Facility(models.Model):
 
 
 class CCC(models.Model):
+    class Meta:
+        verbose_name = 'CCC'
+        verbose_name_plural = 'CCCs'
+        
     name = models.CharField(max_length=30, unique=True)
     description = models.TextField(null=True, max_length=500)
     year = models.IntegerField()

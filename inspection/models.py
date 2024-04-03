@@ -12,6 +12,10 @@ class Remark(models.Model):
         return f'{self.inspection.id}-{self.id}'
 
 class CCOS(models.Model):
+    class Meta:
+        verbose_name = 'CCOS'
+        verbose_name_plural = 'CCOSs'
+        
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     
     creation_date = models.DateField(default=datetime.date.today)
