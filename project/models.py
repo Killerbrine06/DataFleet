@@ -31,9 +31,12 @@ class Project(models.Model):
     class_notation = models.CharField(max_length=100)
     propulsion = models.CharField(max_length=50)
     
-    pm = models.ForeignKey(Person, related_name='pm_for', verbose_name='Project Manager', null=True, on_delete=models.SET_NULL)
-    cm = models.ForeignKey(Person, related_name='cm_for', verbose_name='Construction Manager', null=True, on_delete=models.SET_NULL)
-    sm = models.ForeignKey(Person, related_name='sm_for', verbose_name='Site Manager', null=True, on_delete=models.SET_NULL)
+    pm = models.ForeignKey(Person, related_name='pm_for', 
+                           verbose_name='Project Manager', null=True, on_delete=models.SET_NULL)
+    cm = models.ForeignKey(Person, related_name='cm_for', 
+                           verbose_name='Construction Manager', null=True, on_delete=models.SET_NULL)
+    sm = models.ForeignKey(Person, related_name='sm_for', 
+                           verbose_name='Site Manager', null=True, on_delete=models.SET_NULL)
     
     def __str__(self):
         return f'{self.id}: {self.name}'
@@ -56,8 +59,8 @@ class Element(models.Model):
     alter = models.CharField(verbose_name='Alteration Sheet', max_length=20)
     status = models.IntegerField(choices=[
             (0, 'Null'),
-            (1, 'Inspected'),
-            (2, 'Mounted'), 
-            (3, 'Fabricated')
+            (1, 'Mounted'), 
+            (2, 'Fabricated')
         ])
+    inspection = models.ForeignKey('inspection.CCOS', null=True, on_delete=models.SET_NULL)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)

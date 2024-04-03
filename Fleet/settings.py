@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ccc.apps.CccConfig',
-    'project.apps.ProjectConfig'
+    'project.apps.ProjectConfig',
+    'inspection.apps.InspectionConfig'
 ]
 
 MIDDLEWARE = [
