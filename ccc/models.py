@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Facility(models.Model):
     class Meta:
@@ -33,11 +34,11 @@ class CCC(models.Model):
     def __str__(self):
         return self.name
     
-class Person(models.Model): # TODO one to one cu user
-    name = models.CharField(max_length=30)
+class Person(models.Model):
+    _user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(null=True, max_length=12)
     address = models.CharField(null=True, max_length=30)
     employer = models.ForeignKey(CCC, on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.name
+        return f'{self._user.first_name} {self._user.last_name}'

@@ -5,7 +5,7 @@ class CCC_admin(admin.ModelAdmin):
     list_display = ['id', 'name', 'year', 'director']
     
 class Person_admin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'employer', 'phone']
+    list_display = ['id', '__str__', 'employer', 'phone']
     
 
 admin.site.register(CCC, CCC_admin)

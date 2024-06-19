@@ -4,7 +4,7 @@ from ccc.models import Person
 from project.models import Project, Element, Discipline
 
 class Remark(models.Model):
-    element = models.OneToOneField(Element, on_delete=models.CASCADE)
+    element = models.ForeignKey(Element, on_delete=models.CASCADE)
     inspection = models.ForeignKey('CCOS', on_delete=models.CASCADE)
     open = models.BooleanField(default=True)
     
