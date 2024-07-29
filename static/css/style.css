@@ -1,0 +1,64 @@
+/* Color Palette */
+:root {
+    --navy-blue: #003366;
+    --white: #FFFFFF;
+    --teal: #008080;
+    --light-gray: #D3D3D3;
+    --orange: #FFA500;
+    --sky-blue: #87CEEB;
+    --dark-gray: #333333;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--light-gray);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+}
+
+.container h2 {
+    color: var(--navy-blue);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.container label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--dark-gray);
+}
+
+.container input[type="text"], .container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid var(--light-gray);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.container button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--teal);
+    border: none;
+    border-radius: 4px;
+    color: var(--white);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.container button:hover {
+    background-color: var(--sky-blue);
+}
