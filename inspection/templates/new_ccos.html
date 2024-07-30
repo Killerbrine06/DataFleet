@@ -1,0 +1,56 @@
+{%load static%}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add CCOS</title>
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .container{
+            width: 600px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-grid label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--dark-gray);
+        }
+        
+        .form-grid input, .form-grid select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>New CCOS</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-grid">
+                {{form}}
+            </div>
+            <button>Submit</button>
+        </form>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.searchable-select').select2();
+        });
+</script>
+</html>
