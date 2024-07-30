@@ -23,24 +23,24 @@ class Project(models.Model):
     # docs
     command_number = models.IntegerField()
     type = models.ForeignKey(ProjectType, on_delete=models.CASCADE)
-    gt = models.IntegerField(verbose_name='Gross Tonage')
-    dwt = models.IntegerField(verbose_name='Deadweight')
-    loa = models.IntegerField(verbose_name='Length Overall')
-    lpp = models.IntegerField(verbose_name='Length between Perpendiculars')
-    bb = models.IntegerField(verbose_name='Breadth or Beam')
-    draft = models.IntegerField()
-    speed = models.IntegerField()
-    capacity = models.IntegerField()
-    crew = models.IntegerField()
-    class_notation = models.CharField(max_length=100)
-    propulsion = models.CharField(max_length=50)
+    gt = models.IntegerField(blank=True, null=True, verbose_name='Gross Tonage')
+    dwt = models.IntegerField(blank=True, null=True, verbose_name='Deadweight')
+    loa = models.IntegerField(blank=True, null=True, verbose_name='Length Overall')
+    lpp = models.IntegerField(blank=True, null=True, verbose_name='Length between Perpendiculars')
+    bb = models.IntegerField(blank=True, null=True, verbose_name='Breadth or Beam')
+    draft = models.IntegerField(blank=True, null=True, )
+    speed = models.IntegerField(blank=True, null=True, )
+    capacity = models.IntegerField(blank=True, null=True, )
+    crew = models.IntegerField(blank=True, null=True, )
+    class_notation = models.CharField(blank=True, null=True, max_length=100)
+    propulsion = models.CharField(blank=True, null=True, max_length=50)
     
     pm = models.ForeignKey(Person, related_name='pm_for', 
                            verbose_name='Project Manager', null=True, on_delete=models.SET_NULL)
     cm = models.ForeignKey(Person, related_name='cm_for', 
-                           verbose_name='Construction Manager', null=True, on_delete=models.SET_NULL)
+                           verbose_name='Construction Manager', blank=True, null=True, on_delete=models.SET_NULL)
     sm = models.ForeignKey(Person, related_name='sm_for', 
-                           verbose_name='Site Manager', null=True, on_delete=models.SET_NULL)
+                           verbose_name='Site Manager', blank=True, null=True, on_delete=models.SET_NULL)
     
     def __str__(self):
         return f'{self.id}: {self.name}'
@@ -52,19 +52,19 @@ class Discipline(models.Model):
         return self.name
 
 class Element(models.Model):
-    marking = models.CharField(primary_key=True, max_length=50)
+    marking = models.CharField(max_length=50)
     discipline = models.ForeignKey(Discipline, on_delete=models.CASCADE)
     mark = models.CharField(max_length=20)
-    block = models.CharField(max_length=20)
-    zone = models.CharField(max_length=20)
-    deck = models.CharField(max_length=20)
-    sys_id = models.CharField(verbose_name='System Id', max_length=5)
-    sys_nb = models.IntegerField(verbose_name='System Number SFI', )
-    alter = models.CharField(verbose_name='Alteration Sheet', max_length=20)
+    block = models.CharField(max_length=20, blank=True, null=True,)
+    zone = models.CharField(max_length=20, blank=True, null=True,)
+    deck = models.CharField(max_length=20, blank=True, null=True,)
+    sys_desc = models.CharField(verbose_name='System Description', max_length=200, blank=True, null=True,)
+    sys_nb = models.IntegerField(verbose_name='System Number SFI', blank=True, null=True,)
+    alter = models.CharField(verbose_name='Alteration Sheet', max_length=20, blank=True, null=True,)
     status = models.IntegerField(choices=[
             (0, 'Null'),
             (1, 'Mounted'), 
             (2, 'Fabricated')
         ])
-    inspection = models.ForeignKey('inspection.CCOS', null=True, on_delete=models.SET_NULL)
+    inspection = models.ForeignKey('inspection.CCOS', blank=True, null=True, on_delete=models.SET_NULL)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)

@@ -23,12 +23,17 @@ class CCC(models.Model):
         verbose_name_plural = 'CCCs'
         
     name = models.CharField(max_length=30, unique=True)
-    description = models.TextField(null=True, max_length=500)
+    description = models.TextField(blank=True, null=True, max_length=500)
     year = models.IntegerField()
-    director = models.ForeignKey('Person', null=True, on_delete=models.SET_NULL)
+    type = models.IntegerField(choices=[
+        (0, 'Yard'),
+        (1, 'Class'),
+        (2, 'Owner')
+    ])
+    director = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     phone = models.CharField(null=True, max_length=12)
     address = models.CharField(null=True, max_length=30)
-    facilities = models.OneToOneField(Facility, null=True, on_delete=models.SET_NULL)
+    facilities = models.OneToOneField(Facility, blank=True, null=True, on_delete=models.SET_NULL)
     subcontractor = models.BooleanField(default=False)
     
     def __str__(self):
