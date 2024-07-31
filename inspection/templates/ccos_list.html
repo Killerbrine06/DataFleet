@@ -1,0 +1,39 @@
+{%load static%}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCOS List</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/inspection/ccos_style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>CCOS List</h2>
+        <table>
+            <tr>
+                <th>Project</th>
+                <th>Creation Date</th>
+                <th>Class Inspection Date</th>
+                <th>Owner Inspection Date</th>
+                <th>Discipline</th>
+            </tr>
+            {% for inspection in inspections %}
+            <tr>
+                <td>{{ inspection.project.name }}</td>
+                <td>{{ inspection.creation_date }}</td>
+                <td>{{ inspection.class_inspection_date }}</td>
+                <td>{{ inspection.owner_inspection_date }}</td>
+                <td>{{ inspection.discipline }}</td>
+                <td>
+                    <a href="{%url 'ccos_page' inspection.id%}">View Details</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="{%url 'new_ccos_page'%}">Instantiate New Inspection</a>
+    </div>
+</body>
+</html>
