@@ -13,4 +13,4 @@ class CCOSCreationForm(ModelForm):
         self.fields['discipline'].widget.attrs.update({'class': 'searchable-select'})
         self.fields['yard'].widget.attrs.update({'class': 'searchable-select'})
         self.fields['owner'].widget.attrs.update({'class': 'searchable-select'})
-        self.fields['_class'].widget.attrs.update({'class': 'searchable-select'})
+        self.fields['u_class'].widget.attrs.update({'class': 'searchable-select'})

@@ -50,7 +50,7 @@ class CCOS(models.Model):
     description = models.TextField(max_length=500, null=True)
     
     yard = models.ForeignKey(Person, validators=[check_type_yard], related_name='i_as_y', on_delete=models.CASCADE)
-    _class = models.ForeignKey(Person, validators=[check_type_class], verbose_name='Class', related_name='i_as_c', on_delete=models.CASCADE)
+    u_class = models.ForeignKey(Person, validators=[check_type_class], verbose_name='Class', related_name='i_as_c', on_delete=models.CASCADE)
     owner = models.ForeignKey(Person, validators=[check_type_owner], related_name='i_as_o', on_delete=models.CASCADE)
     # property open:bool -> daca toate remarcile sunt inchise => opened = False
     
