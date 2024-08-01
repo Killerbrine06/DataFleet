@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.core.exceptions import PermissionDenied
+
+from project.models import Element
 from .forms import CCOSCreationForm
 from .models import CCOS
 
@@ -35,4 +37,6 @@ def ccos_view(request, id:int):
         raise PermissionDenied
     
     inspection = get_object_or_404(CCOS, id=id)
-    return HttpResponse(inspection.project.name)
+    elements = Element.objects.filter(project=inspection.project)
+
+    return render(request, 'ccos_page.html', {'inspection': inspection, 'elements': elements})

@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCOS {{inspection.id}} Detail</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/additional_style.css' %}">
+    
+    <style>
+        .container{
+            max-width: 900px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>CCOS <i>{{inspection.id}}</i> Detail</h2>
+        <table>
+            <tr>
+                <th>Name:</th>
+                <td><a href="#">{{ inspection.project.name }} </a></td>
+            </tr>
+
+            <tr>
+                <th>Creation Date:</th>
+                <td>{{ inspection.creation_date }}</td>
+            </tr>
+
+            <tr>
+                <th>Yard:</th>
+                <td>{{ inspection.yard }}</td>
+            </tr>
+            <tr>
+                <th>Class:</th>
+                <td>{{ inspection.u_class }}</td>
+            </tr>
+            <tr>
+                <th>Owner:</th>
+                <td>{{ inspection.owner }}</td>
+            </tr>
+
+            <tr>
+                <th>Discipline:</th>
+                <td>{{ inspection.discipline }}</td>
+            </tr>
+
+            <tr>
+                <th>Elements:</th>
+                <td>
+                    {%if not elements%}
+                    <i style="color: red;">There are no elements on this project</i>
+                    {%else%}
+                    {% for element in elements%}
+                        <a href="{%url 'element_page' element.id%}" style="color: #008080;">{{element.marking}}</a>
+                    {%endfor%}
+                    {%endif%}
+                </td>
+            </tr>
+        </table>
+        <!-- <button>Inspect new element</button> -->
+        <hr>
+        <a class="button_link" href="{% url 'new_ccos_page' %}">Instantiate New Inspection</a>
+        <a class="button_link" href="{% url 'ccos_list_page' %}">Back to Inspection List</a>
+    </div>
+</body>
+</html>

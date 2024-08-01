@@ -1,0 +1,103 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Element {{element.marking}}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/additional_style.css' %}">
+
+    <style>
+        .container {
+            max-width: 900px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Element <i>{{element.marking}}</i> details</h2>
+
+        <table>
+            <tr>
+                <th>Marking: </th>
+                <td>{{element.marking}}</td>
+            </tr>
+            <tr>
+                <th>Discipline: </th>
+                <td>{{element.discipline}}</td>
+            </tr>
+            <tr>
+                <th>Mark: </th>
+                <td>{{element.mark}}</td>
+            </tr>
+            <tr>
+                <th>Block: </th>
+                <td>{{element.block}}</td>
+            </tr>
+            <tr>
+                <th>Zone: </th>
+                <td>{{element.zone}}</td>
+            </tr>
+            <tr>
+                <th>deck: </th>
+                <td>{{element.deck}}</td>
+            </tr>
+            <tr>
+                <th>System Description: </th>
+                <td>{{element.sys_desc}}</td>
+            </tr>
+            <tr>
+                <th>System Number: </th>
+                <td>{{element.sys_nb}}</td>
+            </tr>
+            <tr>
+                <th>Alteration Sheet: </th>
+                <td>{{element.alter}}</td>
+            </tr>
+            <tr>
+                <th>Status: </th>
+                <td>{{element.get_status_display}}</td>
+            </tr>
+            <tr>
+                <th>Inspection: </th>
+                <td>{{element.inspection.id}}</td>
+            </tr>
+            <tr>
+                <th>Project: </th>
+                <td>{{element.project.name}}</td>
+            </tr>
+        </table>
+
+        <div style="width: 100%; display: flex; flex-direction: column; align-items: center">
+            <h2>Remarks</h2>
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header">
+                    <h3 class="card-title">Remark 1</h3>
+                    <p class="card-date">Created on: 2024-07-29</p>
+                </div>
+                <div class="card-body">
+                    <p>This is the short message that gets displayed when the card is expanded. It provides more details about the card.</p>
+                </div>
+            </div>
+    
+            <div class="card" onclick="toggleCard(this)">
+                <div class="card-header">
+                    <h3 class="card-title">Remark 2</h3>
+                    <p class="card-date">Created on: 2024-07-29</p>
+                </div>
+                <div class="card-body">
+                    <p>This is the short message that gets displayed when the card is expanded. It provides more details about the card.</p>
+                </div>
+            </div>
+            <!-- Add more cards as necessary -->
+        </div>
+    </div>
+    <script>
+        function toggleCard(card) {
+            card.classList.toggle('expanded');
+        }
+    </script>
+</body>
+</html>
