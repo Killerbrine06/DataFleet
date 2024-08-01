@@ -52,6 +52,12 @@ class Discipline(models.Model):
         return self.name
 
 class Element(models.Model):
+    STATUS_CHOICES = [
+        (0, 'Null'),
+        (1, 'Mounted'), 
+        (2, 'Fabricated')
+    ]
+    
     marking = models.CharField(max_length=50)
     discipline = models.ForeignKey(Discipline, on_delete=models.CASCADE)
     mark = models.CharField(max_length=20)
@@ -61,10 +67,9 @@ class Element(models.Model):
     sys_desc = models.CharField(verbose_name='System Description', max_length=200, blank=True, null=True,)
     sys_nb = models.IntegerField(verbose_name='System Number SFI', blank=True, null=True,)
     alter = models.CharField(verbose_name='Alteration Sheet', max_length=20, blank=True, null=True,)
-    status = models.IntegerField(choices=[
-            (0, 'Null'),
-            (1, 'Mounted'), 
-            (2, 'Fabricated')
-        ])
+    status = models.IntegerField(choices=STATUS_CHOICES)
     inspection = models.ForeignKey('inspection.CCOS', blank=True, null=True, on_delete=models.SET_NULL)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    
+    def get_status_display(self):
+        return self.STATUS_CHOICES[self.status][1]
