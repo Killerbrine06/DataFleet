@@ -22,11 +22,18 @@ def check_type_owner(value:int):
     value = Person.objects.get(id=value)
     if value.employer.type != 2:
         raise ValidationError(f'The selected user is not part of a OWNER type CCC')
+
+def check_inspection(value:int):
+    element = Element.objects.get(id=value)
     
+    if not element.inspection:
+        raise ValidationError('Cannot add remark to an element that is not under inspection!')
+    
+    elif element.inspection.is_closed:
+        raise ValidationError('Cannot add remark to an element that is part of a closed inspection!')
 
 class Remark(models.Model):
-    element = models.ForeignKey(Element, on_delete=models.CASCADE)
-    inspection = models.ForeignKey('CCOS', on_delete=models.CASCADE)
+    element = models.ForeignKey(Element, validators=[check_inspection], on_delete=models.CASCADE)
     body = models.TextField(max_length=400)
     open = models.BooleanField(default=True)
     
@@ -37,7 +44,8 @@ class CCOS(models.Model):
     class Meta:
         verbose_name = 'CCOS'
         verbose_name_plural = 'CCOSs'
-        
+    
+    number = models.IntegerField() # TODO validator
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     
     creation_date = models.DateField(default=datetime.date.today)
@@ -52,5 +60,5 @@ class CCOS(models.Model):
     yard = models.ForeignKey(Person, validators=[check_type_yard], related_name='i_as_y', on_delete=models.CASCADE)
     u_class = models.ForeignKey(Person, validators=[check_type_class], verbose_name='Class', related_name='i_as_c', on_delete=models.CASCADE)
     owner = models.ForeignKey(Person, validators=[check_type_owner], related_name='i_as_o', on_delete=models.CASCADE)
-    # property open:bool -> daca toate remarcile sunt inchise => opened = False
     
+    # closed = models.BooleanField()

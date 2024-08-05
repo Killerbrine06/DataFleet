@@ -73,3 +73,6 @@ class Element(models.Model):
     
     def get_status_display(self):
         return self.STATUS_CHOICES[self.status][1]
+    
+    def __str__(self):
+        return self.marking
