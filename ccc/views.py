@@ -3,6 +3,9 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('/')
+    
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
