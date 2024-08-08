@@ -72,27 +72,23 @@
 
         <div style="width: 100%; display: flex; flex-direction: column; align-items: center">
             <h2>Remarks</h2>
-            <div class="card" onclick="toggleCard(this)">
-                <div class="card-header">
-                    <h3 class="card-title">Remark 1</h3>
-                    <p class="card-date">Created on: 2024-07-29</p>
+            {% if not remarks %}
+            <i style="color: red;">There are no remarks on this object!</i>
+            {%else%}
+            {% for remark in remarks %}
+                <div class="card" onclick="toggleCard(this)">
+                    <div class="card-header">
+                        <h3 class="card-title">Remark {{remark}}</h3>
+                        <p class="card-date">Created on: {{remark.created_on|date:"d/m/Y"}}</p>
+                    </div>
+                    <div class="card-body">
+                        <p>{{remark.body}}</p>
+                        <a href="{%url 'remark_page' remark.id%}" class="button_link">Check out</a>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <p>This is the short message that gets displayed when the card is expanded. It provides more details about the card.</p>
-                </div>
+            {% endfor %}
+            {% endif %}
             </div>
-    
-            <div class="card" onclick="toggleCard(this)">
-                <div class="card-header">
-                    <h3 class="card-title">Remark 2</h3>
-                    <p class="card-date">Created on: 2024-07-29</p>
-                </div>
-                <div class="card-body">
-                    <p>This is the short message that gets displayed when the card is expanded. It provides more details about the card.</p>
-                </div>
-            </div>
-            <!-- Add more cards as necessary -->
-        </div>
     </div>
     <script>
         function toggleCard(card) {

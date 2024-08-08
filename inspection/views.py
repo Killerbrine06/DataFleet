@@ -4,7 +4,7 @@ from django.core.exceptions import PermissionDenied
 
 from project.models import Element
 from .forms import CCOSCreationForm
-from .models import CCOS
+from .models import CCOS, Remark
 
 def new_ccos_view(request):
     if not request.user.is_authenticated:
@@ -38,7 +38,7 @@ def ccos_view(request, id:int):
     
     inspection = get_object_or_404(CCOS, id=id)
     added_elements = Element.objects.filter(inspection=inspection)
-    available_elements = Element.objects.filter(project=inspection.project)
+    available_elements = Element.objects.filter(project=inspection.project, discipline=inspection.discipline)
     available_unused_elements = []
     
     x = 0
@@ -75,3 +75,14 @@ def add_element_view(request, id:int, element_id:int):
         element.save()
     
     return redirect(f'/ccos/{id}')
+
+def remark_view(request, remark_id:int):
+    remark = get_object_or_404(Remark, id=remark_id)
+    
+    return HttpResponse(remark.body)
+
+def new_remark_view(request, element_id:int=None):
+    pass
+
+def remarks_list_view(request, id:int, element_id:int=None):
+    return HttpResponse('all' if not element_id else element_id)

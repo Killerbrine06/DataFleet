@@ -36,9 +36,10 @@ class Remark(models.Model):
     element = models.ForeignKey(Element, validators=[check_inspection], on_delete=models.CASCADE)
     body = models.TextField(max_length=400)
     open = models.BooleanField(default=True)
+    created_on = models.DateField(auto_now_add=True)
     
     def __str__(self):
-        return f'{self.inspection.id}-{self.id}'
+        return f'I{self.element.inspection.id}-R{self.id}'
 
 class CCOS(models.Model):
     class Meta:
@@ -61,4 +62,4 @@ class CCOS(models.Model):
     u_class = models.ForeignKey(Person, validators=[check_type_class], verbose_name='Class', related_name='i_as_c', on_delete=models.CASCADE)
     owner = models.ForeignKey(Person, validators=[check_type_owner], related_name='i_as_o', on_delete=models.CASCADE)
     
-    # closed = models.BooleanField()
+    is_closed = models.BooleanField(default=False)
