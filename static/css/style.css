@@ -7,6 +7,8 @@
     --orange: #FFA500;
     --sky-blue: #87CEEB;
     --dark-gray: #333333;
+    --intense-orange: #f44336;
+    --highlight-orange: #e53935;
 }
 
 body {
@@ -58,7 +60,7 @@ body > .container {
     box-sizing: border-box;
 }
 
-.container button {
+.container-button-blue {
     width: 100%;
     padding: 10px;
     margin-top: 20px;
@@ -70,8 +72,24 @@ body > .container {
     cursor: pointer;
 }
 
-.container button:hover {
+.container-button-blue:hover {
     background-color: var(--sky-blue);
+}
+
+.container-button-red {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: var(--intense-orange);
+    border: none;
+    border-radius: 4px;
+    color: var(--white);
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.container-button-red:hover {
+    background-color: var(--highlight-orange);
 }
 
 .card {
