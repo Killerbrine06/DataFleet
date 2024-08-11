@@ -10,7 +10,7 @@ urlpatterns = [
         path('', ccos_view, name='ccos_page'),
         path('add/<int:element_id>', add_element_view, name='add_element_api'),
         path('remarks/', include([
-            path('list', remarks_list_view, name='remarks_list_page'),
+            path('list/', remarks_list_view, name='remarks_list_page'),
             path('list/<int:element_id>', remarks_list_view, name='remarks_list_filter_page'),
         ]))
     ])),

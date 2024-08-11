@@ -1,0 +1,67 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remark {{remark}}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        .container {
+            width: 800px;
+            justify-content: center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            margin: 0 auto;
+            display: block;
+            font-size: 16px;
+            max-width: 600px;
+        }
+
+        .readonly {
+            background-color: #f5f5f5;
+            border: none;
+            font-size: 16px;
+            padding: 10px;
+            width: 100%;
+            height: 200px;
+            resize: none;
+        }
+
+        .buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Remark {{remark}}</h2>
+        <h3 style="text-align: center;">Object <i>{{remark.element}}</i> from <i>P{{remark.element.project.id}}/{{remark.element.project.name}}</i></h3>
+        <h3 style="text-align: center;">Created on {{remark.created_on}}</h3>
+
+        {% if remark.open %}
+            <!-- Editable textarea -->
+            <form method="POST">
+                {% csrf_token %}
+                <textarea name="body">{{ remark.body }}</textarea>
+                <p style="color: red;">{{error}}</p>
+                <div class="buttons">
+                    <button class="container-button-blue" type="submit" name="action" value="save">Save Changes</button>
+                    <button class="container-button-red" type="submit" name="action" value="close">Close Remark</button>
+                </div>
+            </form>
+        {% else %}
+            <!-- Read-only text area -->
+            <textarea class="readonly" readonly>{{ remark.body }}</textarea>
+        {% endif %}
+    </div>
+</body>
+</html>

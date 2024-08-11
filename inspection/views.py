@@ -1,3 +1,4 @@
+from django.forms import ValidationError
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.core.exceptions import PermissionDenied
@@ -78,11 +79,31 @@ def add_element_view(request, id:int, element_id:int):
 
 def remark_view(request, remark_id:int):
     remark = get_object_or_404(Remark, id=remark_id)
+    e = ''
     
-    return HttpResponse(remark.body)
+    if request.method == 'POST':
+        if request.POST.get("action") == 'save':
+            remark.body = request.POST.get('body')
+            try:
+                remark.full_clean()
+                remark.save()
+            
+            except ValidationError:
+                e = 'The body should have maximum 400 characters!'
+        
+        elif request.POST.get("action") == 'close':
+            remark.open = False
+            remark.save()
+            
+    return render(request, 'remark.html', {'remark': remark, 'error': e})
 
 def new_remark_view(request, element_id:int=None):
     pass
 
 def remarks_list_view(request, id:int, element_id:int=None):
-    return HttpResponse('all' if not element_id else element_id)
+    if not element_id:
+        remarks = Remark.objects.filter(element__inspection__id=id)
+    
+    else: remarks = Remark.objects.filter(element__id=element_id)
+        
+    return render(request, 'remarks_list.html', {'remarks': remarks})

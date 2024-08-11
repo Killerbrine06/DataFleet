@@ -1,0 +1,42 @@
+{%load static%}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remark List</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/additional_style.css' %}">
+    <style>
+        .container {
+            max-width: 900px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Remark List</h2>
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Element</th>
+                <th>Creation Date</th>
+                <th>Is Open</th>
+            </tr>
+            {% for remark in remarks %}
+            <tr>
+                <td>{{ remark }}</td>
+                <td>{{ remark.element }}</td>
+                <td>{{ remark.created_on|date:"d N Y" }}</td>
+                <td>{{ remark.open }}</td>
+                <td>
+                    <a class="button_link" href="{%url 'remark_page' remark.id%}">Check Out</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% comment %} <a class="button_link" href="{%url 'new_ccos_page'%}">Instantiate New Inspection</a> {% endcomment %}
+    </div>
+</body>
+</html>

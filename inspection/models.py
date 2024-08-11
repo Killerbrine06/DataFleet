@@ -34,7 +34,7 @@ def check_inspection(value:int):
 
 class Remark(models.Model):
     element = models.ForeignKey(Element, validators=[check_inspection], on_delete=models.CASCADE)
-    body = models.TextField(max_length=400)
+    body = models.CharField(max_length=400)
     open = models.BooleanField(default=True)
     created_on = models.DateField(auto_now_add=True)
     
