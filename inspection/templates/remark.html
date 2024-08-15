@@ -5,8 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Remark {{remark}}</title>
+    <title>DataFleet|Remark {{remark}}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/additional_style.css' %}">
 
     <style>
         .container {
@@ -43,11 +44,12 @@
 </head>
 <body>
     <div class="container">
+        <a href="{% url "element_page" remark.element.id%}" class="button_link">&#x25c0; Back to element</a>
         <h2>Remark {{remark}}</h2>
         <h3 style="text-align: center;">Object <i>{{remark.element}}</i> from <i>P{{remark.element.project.id}}/{{remark.element.project.name}}</i></h3>
         <h3 style="text-align: center;">Created on {{remark.created_on}}</h3>
 
-        {% if remark.open %}
+        {% if remark.open and remark.created_by == request.user%}
             <!-- Editable textarea -->
             <form method="POST">
                 {% csrf_token %}

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Element {{element.marking}}</title>
+    <title>DataFleet|Element {{element.marking}}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/additional_style.css' %}">
 
@@ -17,6 +17,7 @@
 </head>
 <body>
     <div class="container">
+        <a href="{% url "ccos_page" element.inspection.id%}" class="button_link">&#x25c0; Back to inspection</a>
         <h2>Element <i>{{element.marking}}</i> details</h2>
 
         <table>
@@ -72,6 +73,7 @@
 
         <div style="width: 100%; display: flex; flex-direction: column; align-items: center">
             <h2>Remarks</h2>
+            <a href="{% url "new_remark_shortcut_page" element.id%}" class="button_link">+</a>
             {% if not remarks %}
             <i style="color: red;">There are no remarks on this object!</i>
             {%else%}
