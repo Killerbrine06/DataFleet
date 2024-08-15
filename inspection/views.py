@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.core.exceptions import PermissionDenied
 
 from project.models import Element
-from .forms import CCOSCreationForm
+from .forms import CCOSCreationForm, RemarkCreationForm
 from .models import CCOS, Remark
 
 def new_ccos_view(request):
@@ -78,6 +78,9 @@ def add_element_view(request, id:int, element_id:int):
     return redirect(f'/ccos/{id}')
 
 def remark_view(request, remark_id:int):
+    if not request.user.is_authenticated:
+        raise PermissionDenied
+    
     remark = get_object_or_404(Remark, id=remark_id)
     e = ''
     
@@ -98,9 +101,28 @@ def remark_view(request, remark_id:int):
     return render(request, 'remark.html', {'remark': remark, 'error': e})
 
 def new_remark_view(request, element_id:int=None):
-    pass
+    if not request.user.is_authenticated:
+        raise PermissionDenied
+    
+    get_object_or_404(Element, id=element_id)
+    
+    if request.method == 'POST':
+        form = RemarkCreationForm(request.POST)
+        
+        form.instance.created_by = request.user
+        if form.is_valid():
+            r = form.save()
+            return redirect('remark_page', remark_id=r.id)
+    
+    else:
+        form = RemarkCreationForm(initial={'element': element_id})
+    
+    return render(request, 'new_remark.html', {'form': form})
 
 def remarks_list_view(request, id:int, element_id:int=None):
+    if not request.user.is_authenticated:
+        raise PermissionDenied
+    
     if not element_id:
         remarks = Remark.objects.filter(element__inspection__id=id)
     

@@ -3,6 +3,7 @@ from django.db import models
 from ccc.models import Person
 from project.models import Project, Element, Discipline
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 # Yard - 0
 # Class - 1
@@ -37,9 +38,19 @@ class Remark(models.Model):
     body = models.CharField(max_length=400)
     open = models.BooleanField(default=True)
     created_on = models.DateField(auto_now_add=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):
         return f'I{self.element.inspection.id}-R{self.id}'
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        
+        if self.pk:
+            original = Remark.objects.get(pk=self.pk)
+
+            if original.created_by != self.created_by:
+                raise ValueError('The created_by attribute cannot be edited!')
 
 class CCOS(models.Model):
     class Meta:

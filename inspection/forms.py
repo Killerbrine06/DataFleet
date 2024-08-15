@@ -22,3 +22,12 @@ class RemarkAdminForm(forms.ModelForm):
         widgets = {
             'body': forms.Textarea(attrs={'rows': 5, 'columns': 80})
         }
+        
+class RemarkCreationForm(forms.ModelForm):
+    class Meta:
+        model = Remark
+        exclude = ['created_by']
+        widgets = {
+            'body': forms.Textarea(attrs={'rows': 5, 'columns': 80})
+        }
+        
