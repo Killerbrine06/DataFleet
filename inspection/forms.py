@@ -4,7 +4,7 @@ from .models import CCOS, Remark
 class CCOSCreationForm(forms.ModelForm):
     class Meta:
         model = CCOS
-        exclude = []
+        exclude = ['is_closed']
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

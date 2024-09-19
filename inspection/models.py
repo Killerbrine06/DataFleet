@@ -61,9 +61,9 @@ class CCOS(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     
     creation_date = models.DateField(default=datetime.date.today)
-    class_inspection_date = models.DateField(null=True)
+    class_inspection_date = models.DateField(null=True, blank=True)
     # class_inspection_date_closed = models.DateField(null=True) TODO property
-    owner_inspection_date = models.DateField(null=True)
+    owner_inspection_date = models.DateField(null=True, blank=True)
     # owner_inspection_date_closed = models.DateField(null=True) TODO property
     
     discipline = models.ForeignKey(Discipline, null=True, on_delete=models.SET_NULL)
@@ -87,4 +87,13 @@ class CCOS(models.Model):
         elif len(l):
             raise ValidationError('There cannot be two inspections on the same project with the same discipline!')
         
+        if self.class_inspection_date and self.owner_inspection_date:
+            if min(self.creation_date, self.class_inspection_date, self.owner_inspection_date) != self.creation_date:
+                raise ValidationError('Cannot set a date prior to the creation date!')
+        elif self.owner_inspection_date and self.creation_date > self.owner_inspection_date:
+            raise ValidationError('Cannot set a date prior to the creation date!')
+        
+        elif self.class_inspection_date and self.creation_date > self.class_inspection_date:
+            raise ValidationError('Cannot set a date prior to the creation date!')
+            
         super().clean()
