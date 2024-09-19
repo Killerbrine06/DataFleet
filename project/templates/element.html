@@ -79,7 +79,11 @@
             {%else%}
             {% for remark in remarks %}
                 <div class="card" onclick="toggleCard(this)">
+                    {%if remark.open%}
                     <div class="card-header">
+                    {%else%}
+                    <div class="card-header" style="background-color: rgb(167, 167, 167);">
+                    {%endif%}   
                         <h3 class="card-title">Remark {{remark}}</h3>
                         <p class="card-date">Created on: {{remark.created_on|date:"d/m/Y"}}</p>
                     </div>

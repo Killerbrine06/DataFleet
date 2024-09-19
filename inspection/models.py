@@ -74,3 +74,17 @@ class CCOS(models.Model):
     owner = models.ForeignKey(Person, validators=[check_type_owner], related_name='i_as_o', on_delete=models.CASCADE)
     
     is_closed = models.BooleanField(default=False)
+    
+    def clean(self):
+        l = CCOS.objects.filter(project=self.project, discipline=self.discipline)
+        
+        if self.pk:
+            original = CCOS.objects.get(pk=self.pk)
+            if original.discipline != self.discipline and len(l):
+                raise ValidationError('There cannot be two inspections on the same project with the same discipline!')
+                
+        
+        elif len(l):
+            raise ValidationError('There cannot be two inspections on the same project with the same discipline!')
+        
+        super().clean()
