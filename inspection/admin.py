@@ -3,12 +3,17 @@ from .models import *
 from django import forms
 from .forms import RemarkAdminForm
 
+@admin.action(description='Close selected remarks')
+def close_remarks(modeladmin, request, queryset):
+    queryset.update(open=False)
+
 class CCOS_admin(admin.ModelAdmin):
     list_display = ['id', 'project', 'creation_date', 'discipline']
     
 class Remark_admin(admin.ModelAdmin):
     list_display = ['id', 'element', 'open', 'created_by_full_name']
     form = RemarkAdminForm
+    actions=[close_remarks]
     
     def created_by_full_name(self, obj:Remark) -> str:
         return obj.created_by.first_name + ' ' + obj.created_by.last_name
