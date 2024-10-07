@@ -1,8 +1,10 @@
+import datetime
 from django.forms import ValidationError
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.core.exceptions import PermissionDenied
 
+from inspection.functions import generate_excel
 from project.models import Element
 from .forms import CCOSCreationForm, RemarkCreationForm
 from .models import CCOS, Remark
@@ -96,6 +98,8 @@ def remark_view(request, remark_id:int):
         
         elif request.POST.get("action") == 'close':
             remark.open = False
+            remark.closed_on = datetime.datetime.today()
+            remark.full_clean()
             remark.save()
             
     return render(request, 'remark.html', {'remark': remark, 'error': e})
@@ -129,3 +133,16 @@ def remarks_list_view(request, id:int, element_id:int=None):
     else: remarks = Remark.objects.filter(element__id=element_id)
         
     return render(request, 'remarks_list.html', {'remarks': remarks})
+
+
+def export_view(request, id:int):
+    if not request.user.is_authenticated:
+        raise PermissionDenied
+    
+    file = generate_excel(get_object_or_404(CCOS, id=id))
+    return HttpResponse('loaded')
+    # response = HttpResponse(content_type='application/vnd.ms-excel')
+    # response['Content-Disposition'] = f"attachment; filename=CCOS_{id}_{datetime.datetime.now().strftime('%d_%m_%Y')}.xlsx"
+    # response.write(file)
+    # return response
+    

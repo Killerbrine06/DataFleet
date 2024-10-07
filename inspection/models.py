@@ -38,19 +38,23 @@ class Remark(models.Model):
     body = models.CharField(max_length=400)
     open = models.BooleanField(default=True)
     created_on = models.DateField(auto_now_add=True)
+    closed_on = models.DateField(null=True, blank=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):
         return f'I{self.element.inspection.id}-R{self.id}'
     
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        
+    def clean(self):
         if self.pk:
             original = Remark.objects.get(pk=self.pk)
 
             if original.created_by != self.created_by:
-                raise ValueError('The created_by attribute cannot be edited!')
+                raise ValidationError('The created_by attribute cannot be edited!')
+
+            if original.closed_on and original.closed_on != self.closed_on:
+                raise ValidationError('The closed_on attribute cannot be edited!')
+            
+        super().clean()
 
 class CCOS(models.Model):
     class Meta:
