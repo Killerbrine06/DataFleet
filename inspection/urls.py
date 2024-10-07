@@ -12,7 +12,8 @@ urlpatterns = [
         path('remarks/', include([
             path('list/', remarks_list_view, name='remarks_list_page'),
             path('list/<int:element_id>', remarks_list_view, name='remarks_list_filter_page'),
-        ]))
+        ])),
+        path('export/', export_view, name='export_to_excel')
     ])),
     path('', ccos_list_view, name='ccos_list_page'),
 ]
